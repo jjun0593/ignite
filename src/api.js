@@ -10,7 +10,7 @@ const getCurrentMonth = () => {
     }
 };
 const getCurrentDay = () => {
-    const day = new Date().getdate();
+    const day = new Date().getDate();
     if (day < 10) {
         return `0${day}`;
     } else {
@@ -26,8 +26,15 @@ const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
 const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
 
 const popular_games = `games?dates=${lastYear},${currentDate}&ordering=-rating&page_size=10`;
-
+const upcoming_games = `games?dates=${currentDate},${nextYear}&ordering=-added&page_size=10`;
+const new_games = `games?dates=${lastYear},${currentDate}&ordering=-released&page_size=10`;
 
 export const popularGamesURL = () => {
     return `${base_url}${popular_games}`;
+};
+export const upcomingGamesURL = () => {
+    return `${base_url}${upcoming_games}`;
+};
+export const newGamesURL = () => {
+    return `${base_url}${new_games}`;
 };

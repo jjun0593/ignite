@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
-
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadGames } from '../actions/gamesAction';
+
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 import Game from '../components/Game';
-import { upcomingGamesURL } from '../api';
+import GameDetail from '../components/GameDetail';
 
 const Home = () => {
+    const location = useLocation();
+    const pathId = location.pathname.split('/')[2];
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadGames());
@@ -18,15 +22,38 @@ const Home = () => {
 
     return (
         <GameList>
+            { pathId && <GameDetail />}
             <h2>Upcoming Games</h2>
             <Games>
-                {upcomingGames.map(upcomingGame => {
+                {upcomingGames.map(game => {
                     return <Game
-                        name={upcomingGame.name}
-                        released={upcomingGame.released}
-                        id={upcomingGame.id}
-                        image={upcomingGame.background_image}
-                        key={upcomingGame.id} />;
+                        name={game.name}
+                        released={game.released}
+                        id={game.id}
+                        image={game.background_image}
+                        key={game.id} />;
+                })}
+            </Games>
+            <h2>Popular Games</h2>
+            <Games>
+                {popular.map(game => {
+                    return <Game
+                        name={game.name}
+                        released={game.released}
+                        id={game.id}
+                        image={game.background_image}
+                        key={game.id} />;
+                })}
+            </Games>
+            <h2>New Games</h2>
+            <Games>
+                {newGames.map(game => {
+                    return <Game
+                        name={game.name}
+                        released={game.released}
+                        id={game.id}
+                        image={game.background_image}
+                        key={game.id} />;
                 })}
             </Games>
         </GameList>
